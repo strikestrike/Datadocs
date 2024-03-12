@@ -1,0 +1,71 @@
+#
+# This workflow is used for testing DuckDB data source in the headless browser.
+#
+name: Test DuckDB data source
+
+# Reference:
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
+# https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads
+# https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows
+on:
+  push:
+    paths:
+      - 'packages/datasource-duckdb/**'
+      - '.github/workflows/*duckdb*'
+  pull_request:
+    paths:
+      - 'packages/datasource-duckdb/**'
+      - '.github/workflows/*duckdb*'
+  workflow_dispatch:
+
+jobs:
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    # check the trigger event in here for avoiding duplicated run
+    # because this workflow will be triggered twice when you push changes into a pull request
+    if: ${{
+      (github.event_name != 'pull_request' || github.event.action != 'synchronize') }}
+
+    steps:
+      - name: 'Print action info'
+        run: |
+          echo "event=${{ github.event_name }}";
+          echo "event_ref=${{ github.event.ref }}";
+          echo "event.action=${{ github.event.action }}";
+
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          submodules: 'true'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: yarn
+
+      - name: Print environment information
+        run: |
+          echo "ref=${{ github.ref }}";
+          echo "event=${{ github.event_name }}";
+          echo "event.ref=${{ github.event.ref }}";
+          echo "event.action=${{ github.event.action }}";
+          echo "sender=${{ github.event.sender.login }}";
+          set -x;
+          pwd;
+          git log -n 1 --oneline;
+          node --version;
+          yarn --version;
+          true;
+
+      - name: Install package
+        run: |
+          cd packages/datasource-duckdb &&
+          yarn install
+
+      - name: Run test script
+        run: |
+          cd packages/datasource-duckdb &&
+          node ./scripts/test.js

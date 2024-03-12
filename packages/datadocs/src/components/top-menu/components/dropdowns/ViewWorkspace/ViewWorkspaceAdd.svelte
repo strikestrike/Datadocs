@@ -1,0 +1,102 @@
+<script lang="ts">
+  import { getContext, tick } from "svelte";
+  import { openModal } from "../../../../common/modal/store-modal";
+  import Icon from "../../../../common/icons/Icon.svelte";
+  import CreateNewWorkspaceModal from "../../modals/CreateNewWorkspaceModal.svelte";
+  import type { ModalConfigType } from "../../../../common/modal/index";
+  import { CLOSE_ROOT_MENU_CONTEXT_NAME } from "../../../../common/menu";
+  import { registerElement } from "../../../../common/key-control/listKeyControl";
+  import type {
+    RegisterElementOptions,
+    KeyControlActionOptions,
+  } from "../../../../common/key-control/listKeyControl";
+  import { scrollVerticalToVisible } from "../../../../common/key-control/scrolling";
+  import { bind } from "../../../../common/modal/modalBind";
+
+  export let keyControlActionOptions: KeyControlActionOptions;
+  export let index: number;
+  export let scrollContainer: HTMLElement = null;
+
+  const closeMainDropdown: () => void = getContext(
+    CLOSE_ROOT_MENU_CONTEXT_NAME
+  );
+  let element: HTMLElement;
+  let isSelected = false;
+
+  function createNewWorkspace() {
+    const isMovable = false;
+    const isResizable = false;
+    const createWsProps = {
+      isMovable: isMovable,
+    };
+    const modalElement = bind(CreateNewWorkspaceModal, createWsProps);
+    const modalConfig: ModalConfigType = {
+      component: modalElement,
+      isMovable: isMovable,
+      isResizable: isResizable,
+      minWidth: 375,
+      minHeight: 200,
+      preferredWidth: 500,
+    };
+    openModal(modalConfig);
+  }
+
+  function handleCreateNewWorkspaceClick() {
+    createNewWorkspace();
+    closeMainDropdown();
+  }
+
+  async function onSelectCallback(byKey = true) {
+    isSelected = true;
+    if (!byKey) {
+      return;
+    }
+    await tick();
+    scrollVerticalToVisible(scrollContainer, element);
+  }
+
+  function onDeselectCallback() {
+    isSelected = false;
+  }
+
+  function onEnterKeyCallback(event: KeyboardEvent) {
+    if (event.key === "Enter" && isSelected) {
+      setTimeout(() => {
+        createNewWorkspace();
+      });
+      closeMainDropdown();
+    }
+  }
+
+  const options: RegisterElementOptions = {
+    config: {
+      isSelected: false,
+      index,
+      onSelectCallback,
+      onDeselectCallback,
+      onEnterKeyCallback,
+    },
+    configList: keyControlActionOptions.configList,
+    index,
+  };
+</script>
+
+<div
+  bind:this={element}
+  class="flex flex-row items-center justify-start mx-1.5 px-3.5 py-1.5 rounded cursor-pointer"
+  class:selected={isSelected}
+  on:click={handleCreateNewWorkspaceClick}
+  use:registerElement={options}
+>
+  <div class="mr-2">
+    <Icon icon="top-menu-view-create-workspace" size="21px" />
+  </div>
+
+  <div class="text-13px h-5 font-medium">Create New Workspace</div>
+</div>
+
+<style lang="postcss">
+  .selected {
+    @apply bg-dropdown-item-hover-bg;
+  }
+</style>

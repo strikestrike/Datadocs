@@ -1,0 +1,1 @@
+export type FieldData = { key: string; type: string };

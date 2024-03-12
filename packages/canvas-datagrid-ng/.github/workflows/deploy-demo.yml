@@ -1,0 +1,45 @@
+name: deploy-demo
+
+# https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads
+# https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - ready_for_review
+
+jobs:
+
+  deploy-demo:
+    runs-on: ubuntu-latest
+    name: 'Deploy demo and reply comment'
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 3
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'yarn'
+      - run: yarn install && yarn run build
+      - name: "Run extra-demo-dir.log"
+        run: |
+          list='demo/pr-${{ github.event.pull_request.number }}'$'\n';
+          list="$list"'demo/feature-${{ github.event.pull_request.number }}';
+          echo "$list" | tee extra-demo.dir.log;
+      - run: bash ./scripts/github-workflows/deploy-demo.sh
+        env:
+          AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+      - run: bash ./scripts/github-workflows/dump-pr-info.sh
+      - name: "Run bash reply-link-to-pr.sh"
+        run: |
+          cat deploy-demo-result.log;
+          bash ./scripts/github-workflows/reply-link-to-pr.sh \
+            '${{ github.event.pull_request.number }}' \
+            "$(cat deploy-demo-result.log)" \
+            "$(cat summary.pr.log)"
+        env:
+          REPO: ${{ github.event.repository.full_name }}
+          BOT: xdatadocs-bot
+          BOT_PAT: ${{ secrets.BOT_PAT }}

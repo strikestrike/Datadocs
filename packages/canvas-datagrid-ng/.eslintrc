@@ -1,0 +1,65 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "prettier",
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "mocha": true,
+    "node": true
+  },
+  "globals": {
+    "chai": true,
+    "assert": true,
+    "canvasDatagrid": true
+  },
+  "rules": {
+    "prettier/prettier": 2, // 2 -> error
+    // Ignore indent rule, because it will be conflicted with "prettier/prettier" rule
+    // Eg: nested ternary operation x1 ? y1 : x2 ? y2 : y3
+    // "indent": [
+    //   "warn",
+    //   2,
+    //   {
+    //     "flatTernaryExpressions": true,
+    //     "offsetTernaryExpressions": true,
+    //     "SwitchCase": 1
+    //   }
+    // ],
+    "@typescript-eslint/consistent-type-imports": "error",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "args": "none",
+        "varsIgnorePattern": "debug|_"
+      }
+    ],
+    "prefer-const": [
+      "error",
+      {
+        "destructuring": "all",
+        "ignoreReadBeforeAssign": false
+      }
+    ],
+    "no-var": 0,
+    "no-unsafe-optional-chaining": 0,
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/ban-ts-comment": 0,
+    // These should be turned on after a clean-up:
+    "@typescript-eslint/no-explicit-any": 0,
+    "no-unused-vars": 0,
+    "no-redeclare": 0
+  }
+}

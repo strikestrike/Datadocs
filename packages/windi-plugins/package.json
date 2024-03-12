@@ -1,0 +1,35 @@
+{
+  "name": "@datadocs/windi-plugins",
+  "type": "module",
+  "module": "./dist/esm/index.js",
+  "types": "./lib/index.ts",
+  "exports": {
+    "./lib/*.js": {
+      "import": "./dist/esm/*.js",
+      "node": "./dist/esm/*.js",
+      "require": "./dist/esm/*.js",
+      "types": "./lib/*.ts"
+    },
+    ".": {
+      "import": "./dist/esm/index.js",
+      "node": "./dist/esm/index.js",
+      "require": "./dist/esm/index.js",
+      "types": "./lib/index.ts"
+    }
+  },
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "predev": "tsc -p tsconfig.esm.json",
+    "build": "tsc -p tsconfig.esm.json",
+    "test": "tsc -p tsconfig.esm.json && node dist/esm/utils.test.js",
+    "clean": "rm -r dist"
+  },
+  "files": [
+    "lib",
+    "dist/esm"
+  ],
+  "devDependencies": {
+    "typescript": "^4.9.4"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "sourceMaps": true,
+  "minify": false,
+  "module": {
+    "type": "es6",
+    "noInterop": true
+  },
+  "jsc": {
+    "target": "es2021",
+    "parser": {
+      "syntax": "typescript",
+      "decorators": true,
+      "privateMethod": true
+    },
+    "preserveAllComments": true,
+    "keepClassNames": true
+  }
+}

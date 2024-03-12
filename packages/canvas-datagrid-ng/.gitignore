@@ -1,0 +1,26 @@
+demo/**/*.min.js
+
+# the output file of the command `npm pack`
+*.tgz
+
+coverage
+
+# Mac OS files
+._*
+.DS_Store
+
+# Log files
+*.log
+
+# Node.js project files
+node_modules
+
+# Build/Cache files
+build
+dist
+*.cache
+.svelte-kit
+
+# Personal editor settings
+.vscode/*.json
+hangxingliu

@@ -1,0 +1,37 @@
+name: test the grid
+
+# https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads
+# https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows
+on:
+  - push
+  - pull_request
+  - workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    if: ${{
+      (github.event_name != 'pull_request' || github.event.action != 'synchronize') }}
+
+    strategy:
+      matrix:
+        node-version:
+          # - '14'
+          - 'lts/*'
+
+    steps:
+      - name: Checkout code from repository
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install
+      - name: Lint
+        run: yarn run lint
+      - name: Test
+        run: yarn run test
+        timeout-minutes: 2

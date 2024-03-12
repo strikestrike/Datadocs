@@ -1,0 +1,5 @@
+
+## New properties
+
+- `dataSource`
+- `stateStore`

@@ -1,0 +1,135 @@
+#
+# This workflow is used for building whole datadocs application
+# and saving the release file to Github artifacts
+#
+# And we treat three branches as primary branches:
+# main, master, design(because of legacy naming issue)
+#
+name: Build Datadocs App
+
+# Reference:
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
+# https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads
+# https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    # check the trigger event in here for avoiding duplicated run
+    # because this workflow will be triggered twice when you push changes into a pull request
+    if: ${{
+      (github.event_name != 'pull_request' || github.event.action != 'synchronize') }}
+
+    name: Build Datadocs app by using Node.js v${{ matrix.node-version }}
+    strategy:
+      matrix:
+        node-version: [20.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    env:
+      IS_FOR_PRIMARY_BRANCHES: ${{
+          (
+            github.ref == 'refs/heads/master' ||
+            github.ref == 'refs/heads/main'
+          ) && (
+            (github.event_name == 'push') || github.event_name == 'workflow_dispatch'
+          ) }}
+      TRIGGER_MANUALLY: ${{ github.event_name == 'workflow_dispatch' }}
+
+    steps:
+
+    # Uncomment `submodules: true` statement for pulling all sub-modules.
+    - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.BOT_GITHUB_TOKEN }}
+        submodules: 'true'
+
+    - name: Generate sign file about workflow triggers
+      run: |
+        set -x;
+        [ "${IS_FOR_PRIMARY_BRANCHES}" == "true" ] && echo true > IS_FOR_PRIMARY_BRANCHES.sign;
+        [ "${TRIGGER_MANUALLY}" == "true" ] && echo true > TRIGGER_MANUALLY.sign;
+        true;
+
+    - name: Setup Node.js v${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: yarn
+
+    - name: Print environment information
+      run: |
+        echo "ref=${{ github.ref }}";
+        echo "event=${{ github.event_name }}";
+        echo "action=${{ github.event.action }}";
+        echo "sender=${{ github.event.sender.login }}";
+        set -x;
+        pwd;
+        git log -n 1 --oneline;
+        node --version;
+        yarn --version;
+        true;
+
+    # - name: Lerna Bootstrap
+    #   run: lerna bootstrap --no-ci --force-local
+
+    # Install ddc module from artifact instead of building from the source code
+    # Because it can take a lot of building time on `npm install`
+    # But we can remove this job and enable `submodules` field in
+    # `actions/checkout` job to building from the source code in the future
+    # after its unused dependencies have been removed.
+    # - name: Install ddc module from github
+    #   run: |
+    #     ./deploy/install-modules-from-github.sh &&
+    #     rm -r .husky
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+
+    # 1. remove unnecessary dependencies
+    # 2. remove unused app modules
+    - name: Optimize dependencies before `yarn install`
+      run: |
+        node ./packages/ddc/scripts/ci-optimize-deps.js
+        rm -r ./packages/ddc/apps
+        true
+
+    - name: Install packages
+      run: yarn install
+
+    - name: Use ESM version of the package `antlr4ts`
+      run: ./scripts/install-antlr4ts-esm.sh
+
+      # Also run the tests once they are usable
+    - name: Run checks & tests
+      run: |
+        yarn workspace @datadocs/canvas-datagrid-ng lint
+
+    - name: Run spec tests (canvas-datagrid-ng)
+      run: |
+        node ./packages/canvas-datagrid-ng/scripts/run-spec-test.js
+
+    - name: Run spec tests (duckdb-utils)
+      run: |
+        yarn workspace @datadocs/duckdb-utils build &&
+        yarn workspace @datadocs/duckdb-utils test
+
+    - name: Web App Build
+      run: yarn run build
+
+    - name: Copy static files
+      run: bash ./deploy/build.sh
+
+    - name: Compress deployment files
+      run: tar czf deploy.tar.gz ./deploy/build ./yarn.lock
+      # run: zip -r deploy.zip ./deploy
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: deploy
+        path: ./deploy.tar.gz
+        if-no-files-found: error

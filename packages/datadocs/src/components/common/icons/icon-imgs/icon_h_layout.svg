@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24.998" height="24.998" viewBox="0 0 24.998 24.998">
+  <g id="vuesax_bold_grid-7" data-name="vuesax/bold/grid-7" transform="translate(-300 -252)">
+    <g id="grid-7" transform="translate(300 252)">
+      <path id="Vector" d="M9.635,0V11.978H6.052C2.26,11.978,0,9.718,0,5.927V0Z" transform="translate(2.083 10.937)" fill="#50585d"/>
+      <path id="Vector-2" data-name="Vector" d="M9.635,0V5.927c0,3.791-2.26,6.052-6.052,6.052H0V0Z" transform="translate(13.28 10.937)" fill="#50585d"/>
+      <path id="Vector-3" data-name="Vector" d="M20.832,6.052V7.291H0V6.052C0,2.26,2.26,0,6.052,0H14.78C18.571,0,20.832,2.26,20.832,6.052Z" transform="translate(2.083 2.083)" fill="#50585d"/>
+      <path id="Vector-4" data-name="Vector" d="M0,0H25V25H0Z" transform="translate(24.998 24.998) rotate(180)" fill="none" opacity="0"/>
+    </g>
+  </g>
+</svg>

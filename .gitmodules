@@ -1,0 +1,11 @@
+[submodule "packages/ddc"]
+	path = packages/ddc
+	url = git@github.com:datadocs/ddc.git
+	branch = voodooattack/monorepo
+
+[submodule "packages/duckdb-wasm"]
+	path = packages/duckdb-wasm
+	url = https://github.com/datadocs/duckdb-wasm-dist.git
+	branch = new-dist
+
+

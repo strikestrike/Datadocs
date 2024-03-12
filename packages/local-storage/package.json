@@ -1,0 +1,52 @@
+{
+  "name": "@datadocs/local-storage",
+  "description": "Client-side storage module for Datadocs App",
+  "main": "dist/cjs/index.js",
+  "types": "lib/index.ts",
+  "exports": {
+    "./dist/cjs/*.js": {
+      "require": "./dist/cjs/*.js",
+      "import": "./dist/esm/*.js",
+      "types": "./lib/*.ts"
+    },
+    "./lib/*.js": {
+      "require": "./dist/cjs/*.js",
+      "import": "./dist/esm/*.js",
+      "types": "./lib/*.ts"
+    },
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./lib/index.ts"
+    }
+  },
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node ./scripts/build all",
+    "build:cjs": "node ./scripts/build cjs",
+    "build:esm": "node ./scripts/build esm",
+    "lint:types": "tsc -p tsconfig.json",
+    "clean": "node ./scripts/build clean",
+    "dev": "node ./scripts/build esm --watch",
+    "start": "vite -m development",
+    "test": "node ./scripts/build test",
+    "test:watch": "node ./scripts/build test:watch"
+  },
+  "files": [
+    "lib",
+    "dist/cjs",
+    "dist/esm"
+  ],
+  "devDependencies": {
+    "@swc/cli": "^0.1.62",
+    "@swc/core": "^1.3.95",
+    "@types/wicg-file-system-access": "^2023.10.1",
+    "fake-indexeddb": "^4.0.2",
+    "rimraf": "^5.0.5",
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "idb": "^7.1.1"
+  }
+}

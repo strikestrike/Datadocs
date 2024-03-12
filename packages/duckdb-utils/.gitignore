@@ -1,0 +1,15 @@
+node_modules
+
+dist
+
+.DS_Store
+._*
+
+*.log
+.tmp
+.env
+
+.antlr
+lib/antlr
+
+scripts/az-upload.sh

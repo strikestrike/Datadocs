@@ -1,0 +1,71 @@
+#
+# This workflow is used for re-generating yarn.lock file and uploading it as an artifact
+#
+name: Update yarn.lock file
+
+# Reference:
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
+# https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads
+# https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows
+on:
+  workflow_dispatch:
+
+jobs:
+
+  gen-yarn-lock:
+    name: Update yarn.lock
+    runs-on: ubuntu-latest
+    # check the trigger event in here for avoiding duplicated run
+    # because this workflow will be triggered twice when you push changes into a pull request
+    if: ${{
+      (github.event_name != 'pull_request' || github.event.action != 'synchronize') }}
+
+    steps:
+      - name: 'Print action info'
+        run: |
+          echo "event=${{ github.event_name }}";
+          echo "event_ref=${{ github.event.ref }}";
+          echo "event.action=${{ github.event.action }}";
+
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          submodules: 'true'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: Print environment information
+        run: |
+          echo "ref=${{ github.ref }}";
+          echo "event=${{ github.event_name }}";
+          echo "event.ref=${{ github.event.ref }}";
+          echo "event.action=${{ github.event.action }}";
+          echo "sender=${{ github.event.sender.login }}";
+          set -x;
+          pwd;
+          git log -n 1 --oneline;
+          node --version;
+          yarn --version;
+          git submodule foreach 'git log -n 1 --format=medium HEAD;echo;';
+          true;
+
+      - name: Optimize dependencies before `yarn install`
+        run: |
+          node ./packages/ddc/scripts/ci-optimize-deps.js
+          rm -r ./packages/ddc/apps
+          true
+
+      - name: Remove old yarn.lock
+        run: rm -v yarn.lock
+
+      - name: Install packages
+        run: yarn install
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: yarn-lock-file
+          path: ./yarn.lock
+          if-no-files-found: error

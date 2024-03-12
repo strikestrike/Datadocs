@@ -1,0 +1,16 @@
+/public/sw*.js
+/public/fonts/offline
+
+/node_modules/
+/public/build/
+/*.sh
+
+.DS_Store
+
+/types/
+docs/code
+docs/web
+.stats
+
+# ignore for generated code for inspecting
+/src-inspect

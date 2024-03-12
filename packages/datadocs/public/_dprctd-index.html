@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+__        __               _             _
+\ \      / /_ _ _ __ _ __ (_)_ __   __ _| |
+ \ \ /\ / / _` | '__| '_ \| | '_ \ / _` | |
+  \ V  V / (_| | |  | | | | | | | | (_| |_|
+   \_/\_/ \__,_|_|  |_| |_|_|_| |_|\__, (_)
+                                   |___/
+Warning: This file is designed for an old building system.
+But we are using Vite to build the app, so modifying it would not affect the app.
+But we can keep it for reference purposes.
+ -->
+<head>
+	<meta charset='utf-8'>
+	<link rel="manifest" href="/manifest.json">
+	<meta name='viewport' content='width=device-width,initial-scale=1,maximum-scale=1'>
+
+	<title>Datadocs</title>
+
+	<link rel='icon' type='image/png' href='/favicon.ico'>
+	<!-- <link rel='stylesheet' href='./global.css?r=#TIMESTAMP#'> -->
+	<!-- <link rel='stylesheet' href='./build/bundle.css?r=#TIMESTAMP#'> -->
+
+	<script>
+    window.DATADOCS_BASE_PATH='#DATADOCS_BASE_PATH#';
+    window.RESOURCE_TIMESTAMP='#TIMESTAMP#';
+  </script>
+	<!-- <script defer src='./build/bundle.js?r=#TIMESTAMP#'></script> -->
+</head>
+
+<body>
+  <script>
+    function loadPageResource(basePath) {
+      const timestamp = window.RESOURCE_TIMESTAMP;
+
+      const globalStyleSheet = document.createElement("link");
+      globalStyleSheet.rel = "stylesheet";
+      globalStyleSheet.href = `${basePath}/global.css?r=${timestamp}`;
+
+      const bundleStyleSheet = document.createElement("link");
+      bundleStyleSheet.rel = "stylesheet";
+      bundleStyleSheet.href = `${basePath}/build/bundle.css?r=${timestamp}`;
+
+      const mainScript = document.createElement("script");
+      mainScript.defer = true;
+      mainScript.src = `${basePath}/build/bundle.js?r=${timestamp}`;
+
+      document.head.appendChild(globalStyleSheet);
+      document.head.appendChild(bundleStyleSheet);
+      document.head.appendChild(mainScript);
+    }
+
+    let routeBasePath = "";
+    if (
+      typeof window.DATADOCS_BASE_PATH === "string"
+      && window.DATADOCS_BASE_PATH.startsWith("/")
+    ){
+      routeBasePath = window.DATADOCS_BASE_PATH.replace(/\/*$/, "");
+    };
+    loadPageResource(routeBasePath);
+  </script>
+	<script src="/sw-register.js?r=#TIMESTAMP#"></script>
+</body>
+</html>

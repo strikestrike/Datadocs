@@ -1,0 +1,110 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "prettier",
+    "@typescript-eslint"
+  ],
+  "ignorePatterns": ["src/lib/wasm", "*_dprctd*"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "settings": {
+    "svelte": {
+      "ignoreWarnings": [
+        "@typescript-eslint/no-unsafe-assignment",
+        "@typescript-eslint/no-unsafe-member-access",
+        "@typescript-eslint/no-empty-function",
+        "@typescript-eslint/no-unused-vars"
+      ]
+    }
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.svelte"
+      ],
+      "extends": [
+        "plugin:svelte/recommended"
+      ],
+      "parser": "svelte-eslint-parser",
+      "parserOptions": {
+        "parser": "@typescript-eslint/parser"
+      },
+      "rules": {
+        "prettier/prettier": "off",
+        "no-self-assign": "off",
+        "svelte/no-at-html-tags": "off",
+        "svelte/no-unused-svelte-ignore": "warn",
+        "svelte/valid-compile": [
+          "error",
+          {
+            "ignoreWarnings": false
+          }
+        ]
+      }
+    }
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "mocha": true,
+    "node": true
+  },
+  "globals": {
+    "chai": true,
+    "assert": true,
+    "canvasDatagrid": true
+  },
+  "rules": {
+    "prettier/prettier": 2, // 2 -> error
+    "indent": [
+      "warn",
+      2,
+      {
+        "flatTernaryExpressions": true,
+        "offsetTernaryExpressions": true,
+        "SwitchCase": 1
+      }
+    ],
+    "@typescript-eslint/consistent-type-imports": "error",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "args": "none",
+        "varsIgnorePattern": "debug"
+      }
+    ],
+    "no-var": 0,
+    "no-self-assign": "warn",
+    "no-empty": "warn",
+    "no-unsafe-optional-chaining": 0,
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/ban-ts-comment": 0,
+    "@typescript-eslint/no-empty-interface": 1,
+    "@typescript-eslint/no-empty-function": 1,
+    "@typescript-eslint/ban-types": 1,
+    "@typescript-eslint/no-non-null-assertion" : 0,
+    "no-empty-function": "off",
+    "prefer-const": [
+      "warn",
+      {
+        "destructuring": "any",
+        "ignoreReadBeforeAssign": false
+      }
+    ],
+    // These should be turned on after a clean-up:
+    "no-inner-declarations": "warn",
+    "no-constant-condition": "warn",
+    "no-useless-escape": "off",
+    "@typescript-eslint/no-explicit-any": 0,
+    "no-unused-vars": 0,
+    "no-redeclare": 0
+  }
+}

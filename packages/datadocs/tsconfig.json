@@ -1,0 +1,38 @@
+{
+  "extends": "@tsconfig/svelte/tsconfig.json",
+  "include": ["src/**/*.ts", "types/**/*.ts", "src/styles/themes/colors.js"],
+  "exclude": ["node_modules/*", "__sapper__/*", "public/*"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "es2020",
+    "types": [
+      "node",
+      "svelte",
+      "wicg-file-system-access"
+    ],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "paths": {
+      "@datadocs/datagrid-canvas-ng": ["../datagrid-canvas-ng/lib" ],
+      "@datadocs/datagrid-canvas-ng/*": ["../datagrid-canvas-ng/lib/*" ],
+      "@datadocs/datasource-duckdb": ["../datasource-duckdb/lib" ],
+      "@datadocs/datasource-duckdb/*": ["../datasource-duckdb/lib/*" ],
+      "@datadocs/duckdb-utils": ["../duckdb-utils/lib" ],
+      "@datadocs/duckdb-utils/*": ["../duckdb-utils/lib/*" ],
+      "@datadocs/utils": ["../ddc/packages/utils/src"],
+      "@datadocs/utils/*": ["../ddc/packages/utils/src/*"],
+      "@datadocs/common": ["../ddc/packages/common/src"],
+      "@datadocs/common/*": ["../ddc/packages/common/src/*"],
+      "@datadocs/parser": ["../ddc/packages/parser/src"],
+      "@datadocs/parser/*": ["../ddc/packages/parser/src/*"],
+      "@datadocs/ast": ["../ddc/packages/ast/src"],
+      "@datadocs/ast/*": ["../ddc/packages/ast/src/*"],
+      "@datadocs/ddt": ["../ddc/packages/ddt/src"],
+      "@datadocs/ddt/*": ["../ddc/packages/ddt/src/*"],
+      "@datadocs/ddc": ["../ddc/packages/ddc/src"],
+      "@datadocs/ddc/*": ["../ddc/packages/ddc/src/*"],
+      "@datadocs/processors": ["../ddc/packages/processors/src"],
+      "@datadocs/processors/*": ["../ddc/packages/processors/src/*"]
+    }
+  }
+}

@@ -1,0 +1,14 @@
+<svg id="vuesax_bold_grid-1" data-name="vuesax/bold/grid-1" xmlns="http://www.w3.org/2000/svg" width="20.492" height="20.492" viewBox="0 0 20.492 20.492">
+  <g id="grid-1">
+    <path id="Vector" d="M4.91,0V4.952H0A4.548,4.548,0,0,1,4.91,0Z" transform="translate(1.708 1.708)"/>
+    <path id="Vector-2" data-name="Vector" d="M4.91,4.952H0V0A4.548,4.548,0,0,1,4.91,4.952Z" transform="translate(13.875 1.708)"/>
+    <path id="Vector-3" data-name="Vector" d="M4.91,0A4.537,4.537,0,0,1,0,4.867V0Z" transform="translate(13.875 13.918)"/>
+    <path id="Vector-4" data-name="Vector" d="M4.91,0V4.867A4.537,4.537,0,0,1,0,0Z" transform="translate(1.708 13.918)"/>
+    <path id="Vector-5" data-name="Vector" d="M0,0H4.91V4.7H0Z" transform="translate(1.708 7.941)"/>
+    <path id="Vector-6" data-name="Vector" d="M0,0H4.91V4.7H0Z" transform="translate(13.875 7.941)"/>
+    <path id="Vector-7" data-name="Vector" d="M0,0H4.7V4.7H0Z" transform="translate(7.898 7.941)"/>
+    <path id="Vector-8" data-name="Vector" d="M0,0H4.7V4.952H0Z" transform="translate(7.898 1.708)"/>
+    <path id="Vector-9" data-name="Vector" d="M0,0H4.7V4.867H0Z" transform="translate(7.898 13.918)"/>
+    <path id="Vector-10" data-name="Vector" d="M0,0H20.492V20.492H0Z" transform="translate(20.492 20.492) rotate(180)" fill="none" opacity="0"/>
+  </g>
+</svg>

@@ -1,0 +1,5 @@
+/** Add out custom stylesheet in here for the TypeDoc */
+
+.tsd-navigation.primary .tsd-accordion-details  a {
+  padding: 0.25em 0.5rem;
+}

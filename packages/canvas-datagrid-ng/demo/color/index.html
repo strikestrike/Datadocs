@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
+  <title>Color</title>
+  <style>
+    #container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
+    #container .box {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container"></div>
+  <script>
+    const colors = [
+      '#000000',
+      '#FFFFFF',
+      '#4285F4',
+      '#EA4336',
+      '#FABD05',
+      '#34A852',
+      '#FF6D01',
+      '#46BDC6',
+    ];
+    const container = document.getElementById('container');
+    for (let i = 0; i < colors.length; i++) {
+      const color = colors[i];
+      const box = document.createElement('div');
+      box.className = 'box';
+      box.style.background = color;
+      box.innerText = color;
+      container.appendChild(box);
+    }
+  </script>
+</body>
+
+</html>

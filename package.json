@@ -1,0 +1,50 @@
+{
+  "name": "datadocs-app",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/ddc",
+      "packages/ddc/apps/*",
+      "packages/ddc/packages/*",
+      "packages/datadocs",
+      "packages/canvas-datagrid-ng",
+      "packages/datasource-duckdb",
+      "packages/duckdb-utils",
+      "packages/duckdb-wasm",
+      "packages/local-storage",
+      "packages/mock-api-server",
+      "packages/windi-plugins",
+      "packages/submodule-template"
+    ]
+  },
+  "scripts": {
+    "prebuild": "lerna run predev",
+    "build": "cross-env FORCE_COLOR=1 NODE_ENV=production lerna run build --stream",
+    "check": "lerna run check --stream",
+    "clean": "node ./scripts/clean.js",
+    "predev": "lerna run predev",
+    "dev": "cross-env FORCE_COLOR=1 NODE_ENV=development lerna run dev --parallel --stream",
+    "devbuild": "lerna run devbuild --parallel --stream",
+    "docs": "lerna run docs --stream",
+    "prepare": "husky install",
+    "preview": "yarn workspace datadocs run preview",
+    "removehook": "husky uninstall",
+    "start": "lerna run start --stream"
+  },
+  "jest": {
+    "projects": [],
+    "verbose": true
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^18.2.0",
+    "@commitlint/config-conventional": "^18.1.0",
+    "cross-env": "^7.0.3",
+    "husky": "^8.0.3",
+    "lerna": "^7.4.2",
+    "rimraf": "^5.0.5",
+    "typescript": "^5"
+  },
+  "installConfig": {
+    "hoistingLimits": "dependencies"
+  }
+}

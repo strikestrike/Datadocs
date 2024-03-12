@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <script type="module" src="../../lib/polyfills.ts"></script>
+  <script type="module" src="./index.js"></script>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  <style>
+    html,
+    body {
+      height: 100%;
+      min-height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    html,
+    body {
+      overscroll-behavior-x: none;
+    }
+
+    #toolbar {
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-family: sans-serif;
+    }
+
+    #toolbar>* {
+      margin-left: 5px;
+      font-family: sans-serif;
+    }
+
+    #grid {
+      position: absolute;
+      top: 30px;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      margin: 1em;
+      border: 1px solid #E9EDF0;
+      border-radius: 3px;
+      font-family: Poppins, Arial, sans-serif;
+      display: flex;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #grid > * {
+      flex: 1;
+      min-width: 0;
+      min-height: 0;
+      border-radius: 3px;
+    }
+
+    #errorMessage {
+      color: #f65314;
+    }
+
+    /* This forces all the children in <body> to have the same cursor as <body> (used when dragging item) */
+    body.grid-cursor-override-children * {
+      cursor: inherit !important;
+    }
+
+    /*
+     * This is to disable hover effects when dragging item and the cursor moves outside the grid boundaries.
+     * Note that elements that shouldn't receive events should have `grid-dragging-no-pointer-events`
+     * class selector.
+    */
+    body.grid-cursor-override-children .grid-dragging-no-pointer-events {
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="toolbar" class="grid-dragging-no-pointer-events">
+    <button id="buttonTogglePerformance" type="button">Toggle performance</button>
+    <button id="buttonAddButton" type="button">Add button</button>
+    <div id="errorMessage"></div>
+    <div id="profilerMessage"></div>
+  </div>
+  <div id="grid"></div>
+
+  <div style="display:none;">
+    <svg id="icon1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="512" height="512">
+      <path style="fill:#fff" d="M48,46.5C48,42.91016,37.70258,40,25,40S2,42.91016,2,46.5v9C2,59.08984,12.29742,62,25,62s23-2.91016,23-6.5Z" />
+      <ellipse style="fill:#81d4fa" cx="25" cy="46.5" rx="23" ry="6.5" />
+      <path style="fill:#fff" d="M48,29.5C48,25.91016,37.70258,23,25,23S2,25.91016,2,29.5v9C2,42.08984,12.29742,45,25,45s23-2.91016,23-6.5Z" />
+      <ellipse style="fill:#81d4fa" cx="25" cy="29.5" rx="23" ry="6.5" />
+      <ellipse style="fill:#fff" cx="25" cy="23.5" rx="18" ry="4.5" />
+      <path style="opacity: 0.1" d="M44,29.5v9c0,3.39923-9.23474,6.18732-21,6.474.65967.016,1.32556.026,2,.026,12.70258,0,23-2.91016,23-6.5v-9C48,25.91016,44,26.10077,44,29.5Z" />
+      <path style="opacity: 0.1" d="M45.18005,43.38013H41.15674C42.9577,44.30682,44,45.36792,44,46.5v9c0,3.39923-9.23474,6.18732-21,6.474.65967.016,1.32556.026,2,.026,12.70258,0,23-2.91016,23-6.5v-9C48,45.36926,46.97668,44.30627,45.18005,43.38013Z" />
+      <path style="opacity: 0.1" d="M23,20.32925a17.04549,17.04549,0,0,0,4.23689,10.97709C33.862,38.65844,44.483,36.82537,45,36.7276L33.80109,33.594a26.92366,26.92366,0,0,1-4.35624-7.20913,26.32985,26.32985,0,0,1-1.84991-7.78585Z" />
+      <circle style="fill:#fff" cx="43" cy="19" r="17" />
+      <path style="opacity: 0.1" d="M43,2a17.1085,17.1085,0,0,0-2,.12775,16.98909,16.98909,0,0,1,0,33.7445A16.99544,16.99544,0,1,0,43,2Z" />
+      <path style="fill: #4d4d4d"
+        d="M57.76331,30.93518A18.99274,18.99274,0,1,0,24.10638,17.0069c-4.79384.12263-19.92655.64891-19.05035,7.05877C1.73964,25.5239.06274,27.13255,0,29.5v9a4.93245,4.93245,0,0,0,2.4173,4.00012A4.93213,4.93213,0,0,0,0,46.5v9C0,61.33984,12.95947,64,25,64s25-2.66016,25-8.5v-9a4.93216,4.93216,0,0,0-2.41748-4A4.93216,4.93216,0,0,0,50,38.5V36.647a19.00176,19.00176,0,0,0,4.93518-2.88366l5.65076,5.65075a1.99978,1.99978,0,0,0,2.82812-2.82812ZM43,4A14.98641,14.98641,0,0,1,53.70258,29.4906c-.03827.033-.08039.059-.11664.09534s-.06232.07824-.09522.11651A14.99444,14.99444,0,1,1,43,4ZM7.91986,27.25226c3.41477,1.91864,12.54524,3.04823,19.58045,2.69885A19.14518,19.14518,0,0,0,31.06165,33.761C29.1,33.91736,27.06354,34,25,34,11.20508,34,4.2959,30.72461,3.99805,29.51953,4.00079,29.50861,4.40967,28.447,7.91986,27.25226Zm16.189-6.2428a18.81962,18.81962,0,0,0,1.24249,4.98608c-7.78381.08624-14.12342-1.28023-15.99152-2.50872C10.93,22.51074,15.9986,21.10736,24.10889,21.00946ZM43.0741,44.61871c.81335.1778,3.13532,1.71906,2.92144,1.87262C45.66046,47.74463,38.75519,51,25,51,11.20508,51,4.2959,47.72461,3.99805,46.52c.00226-.00861.32-.858,2.92767-1.90125C11.50488,46.131,18.0155,47,25,47,31.98523,47,38.49652,46.1308,43.0741,44.61871ZM25,60C11.20508,60,4.2959,56.72461,4,55.5l-.00092-4.10071C8.76459,53.84875,17.08051,55,25,55s16.23553-1.15131,21.001-3.60083l.00091,4.08032C45.7041,56.72461,38.79492,60,25,60ZM46.002,38.48C41.94189,42.29373,32.85,42.77547,25,43c-6.80762,0-13.33057-.89014-17.45117-2.38135C4.38037,39.47607,4.00439,38.5,4,38.5l-.00092-4.10071C8.76459,36.84875,17.08051,38,25,38a73.93283,73.93283,0,0,0,12.08691-.95441,18.59146,18.59146,0,0,0,8.91462.69367Z" />
+      <circle class="cls-2" cx="49" cy="25" r="2" />
+    </svg>
+  </div>
+</body>
+
+</html>

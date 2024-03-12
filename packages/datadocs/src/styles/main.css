@@ -1,0 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Amatic+SC:normal,bold,italic,bolditalic|Caveat:normal,bold,italic,bolditalic|Caveat+Brush:normal,bold,italic,bolditalic|Comfortaa:normal,bold,italic,bolditalic|EB+Garamond:normal,bold,italic,bolditalic|Lobster:normal,bold,italic,bolditalic|Lobster+Two:normal,bold,italic,bolditalic|Lora:normal,bold,italic,bolditalic|Merriweather:normal,bold,italic,bolditalic|Montserrat:normal,bold,italic,bolditalic|Nunito:normal,bold,italic,bolditalic|Oswald:normal,bold,italic,bolditalic|Pacifico:normal,bold,italic,bolditalic|Playfair+Display:normal,bold,italic,bolditalic|Roboto:normal,bold,italic,bolditalic|Roboto+Condensed:normal,bold,italic,bolditalic|Roboto+Mono:normal,bold,italic,bolditalic|Roboto+Slab:normal,bold,italic,bolditalic|Spectral:normal,bold,italic,bolditalic&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+/* @font-face {
+  font-family: "Consolas BoldItalic";
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("/fonts/consolaz.ttf") format('truetype');
+} */
+
+/* hide firebase emulator warning */
+.firebase-emulator-warning {
+  display: none;
+}
+
+.grid-editor-hyperlink-button * {
+  pointer-events: none;
+}

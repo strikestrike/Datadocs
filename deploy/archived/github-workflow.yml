@@ -1,0 +1,49 @@
+
+#
+# The following steps are deprecated, they are used for deploying to the old server
+#
+- name: Configure SSH
+  if: ${{
+    env.IS_FOR_PRIMARY_BRANCHES == 'true' &&
+    env.TRIGGER_MANUALLY == 'true' }}
+  run: |
+    mkdir -p ~/.ssh/
+    echo "$SSH_KEY" > ~/.ssh/uiserver.key
+    chmod 600 ~/.ssh/uiserver.key
+    cat >>~/.ssh/config <<END
+    Host uiserver
+      HostName $SSH_HOST
+      User $SSH_USER
+      IdentityFile ~/.ssh/uiserver.key
+      StrictHostKeyChecking no
+    END
+  env:
+    SSH_USER: ubuntu
+    SSH_HOST: ui.datadocs.com
+    SSH_KEY: ${{ secrets.DEFAULT_ACTION_SECRET }}
+- name: Prepare Sever
+  continue-on-error: true
+  if: ${{
+    env.IS_FOR_PRIMARY_BRANCHES == 'true' &&
+    env.TRIGGER_MANUALLY == 'true' }}
+  run: |
+    ssh uiserver 'rm -rf datadocs-svelte; mkdir datadocs-svelte' &&
+    scp -i ~/.ssh/uiserver.key deploy.tar.gz ubuntu@ui.datadocs.com:datadocs-svelte/ &&
+    ssh uiserver 'cd datadocs-svelte; tar xzf deploy.tar.gz;' &&
+    ssh uiserver 'docker container stop perspx-datadocs;docker container rm perspx-datadocs' &&
+    ssh uiserver 'cd datadocs-svelte; docker build -t perspective/apache ./deploy;docker run -dit --name perspx-datadocs -p 80:80 perspective/apache'
+
+
+#    - name: docker/cpp
+#      run: scripts/build_docker.sh cpp
+#      env:
+#        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+#    - name: Native build
+#      run: yarn build_cpp
+#    - name: Native tests
+#      run: yarn test_cpp
+
+#    - name: docker/emsdk
+#      run: scripts/build_docker.sh emsdk
+#      env:
+#        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

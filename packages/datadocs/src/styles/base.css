@@ -1,0 +1,124 @@
+@layer base {
+
+  html,
+  body {
+    @apply w-full h-full;
+    @apply overflow-hidden;
+
+    @apply max-w-full;
+    @apply min-h-full max-h-full;
+
+    /* min-width: 1280px; */
+
+    padding: 0;
+    margin: 0;
+    overscroll-behavior-x: none;
+  }
+
+  body {
+    @apply text-color-1 relative;
+    font-family: Poppins;
+    font-size: 14px;
+    color: #454450; /*#50585d;*/
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+
+  html,
+  body {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    /* min-width: 1480px;
+    min-height: 960px; */
+  }
+
+  body {
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  a {
+    /* color: rgb(0, 100, 200); */
+    text-decoration: none;
+  }
+
+  a:hover {
+    /* text-decoration: underline; */
+  }
+
+  a:visited {
+    /* color: rgb(0, 80, 160); */
+  }
+
+  label {
+    display: block;
+  }
+
+  main,
+  #appRoot {
+    @apply w-full h-full block;
+  }
+
+  /*
+    because default user-select is none on safari
+    make sure input, textarea and content editable div can be edited
+  */
+  input,
+  textarea,
+  div[contenteditable="true"],
+  div[contenteditable="true"] > * {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+
+  * {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    border-color: transparent;
+  }
+
+
+  input,
+  button,
+  select,
+  textarea {
+    font-family: inherit;
+    font-size: inherit;
+
+    /**
+    * We prefer to have these html tags have default style
+    * with no padding, margin and border style. So it won't
+    * break the design before the migration
+    */
+    -webkit-padding: 0;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    /* border: 1px solid #ccc;
+    border-radius: 2px; */
+  }
+
+  input:disabled {
+    color: #ccc;
+  }
+
+  button {
+    /* color: #333; */
+    /* background-color: #f4f4f4; */
+    /* outline: none; */
+  }
+
+  button:disabled {
+    color: #999;
+  }
+
+  .fields-modal > * {
+    min-width: 300px;
+  }
+}

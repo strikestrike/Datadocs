@@ -1,0 +1,38 @@
+{
+  "name": "@datadocs/submodule-template",
+  "main": "dist/cjs/index.js",
+  "types": "lib/index.ts",
+  "exports": {
+    "./dist/cjs/*.js": {
+      "require": "./dist/cjs/*.js",
+      "import": "./dist/esm/*.js",
+      "types": "./lib/*.ts"
+    },
+    "./lib/*.js": {
+      "require": "./dist/cjs/*.js",
+      "import": "./dist/esm/*.js",
+      "types": "./lib/*.ts"
+    },
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./lib/index.ts"
+    }
+  },
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc -p . && tsc -p tsconfig.esm.json && node show-diff-for-esm",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "clean": "rm -r dist"
+  },
+  "files": [
+    "lib",
+    "dist/cjs",
+    "dist/esm"
+  ],
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "typescript": "^5"
+  }
+}

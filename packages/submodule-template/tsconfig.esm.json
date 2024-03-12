@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "ES2022"
+    ],
+    "module": "ES2022",
+    "target": "ES2022",
+    "outDir": "dist/esm",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "incremental": true,
+    "sourceMap": true,
+    "removeComments": false,
+    "declaration": true,
+    "preserveConstEnums": true
+  },
+  "include": [
+    "lib"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
+}

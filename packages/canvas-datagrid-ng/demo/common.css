@@ -1,0 +1,70 @@
+html,
+body {
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  overscroll-behavior-x: none;
+}
+
+#toolbar,
+#toolbar2 {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-family: sans-serif;
+}
+
+#toolbar2 {
+  height: 20px;
+  font-size: 14px;
+  font-family: monospace;
+}
+
+#toolbar > *,
+#toolbar2 > * {
+  margin-left: 5px;
+  font-family: sans-serif;
+}
+
+#grid {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: 1em;
+  border: 1px solid #e9edf0;
+  border-radius: 3px;
+  font-family: Poppins, Arial, sans-serif;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+}
+
+#grid > * {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 3px;
+}
+
+#errorMessage {
+  color: #f65314;
+}
+
+/* This forces all the children in <body> to have the same cursor as <body> (used when dragging item) */
+body.grid-cursor-override-children * {
+  cursor: inherit !important;
+}
+
+/*
+ * This is to disable hover effects when dragging item and the cursor moves outside the grid boundaries.
+ * Note that elements that shouldn't receive events should have `grid-dragging-no-pointer-events`
+ * class selector.
+*/
+body.grid-cursor-override-children .grid-dragging-no-pointer-events {
+  pointer-events: none;
+}

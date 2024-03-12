@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
+    "target": "ES2022",
+    "module": "CommonJS",
+    "outDir": "dist/tsc",
+    "skipLibCheck": true,
+    "strict": true,
+    "incremental": true,
+    "sourceMap": false,
+    "removeComments": false,
+    "declaration": false,
+    "moduleResolution": "node",
+    "preserveConstEnums": true,
+    "noImplicitOverride": true,
+    "types": [
+      "node",
+      "mocha"
+    ]
+  },
+  "include": [
+    "lib"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Mocha Tests</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
+  <meta name="renderer" content="webkit" />
+  <link rel="stylesheet" href="./mocha.css">
+  <style>
+    #toolbar {
+      display: flex;
+      flex-direction: row;
+      padding: 4px;
+    }
+
+    #toolbar a {
+      text-decoration: none;
+      color: #0099e5;
+    }
+
+    #toolbar a:hover {
+      text-decoration: underline;
+    }
+
+    .mocha-status {
+      margin: 0 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="toolbar">
+    <a href="/dev/mocha.html?">Run all</a>
+    <!-- <div class="mocha-status"></div> -->
+  </div>
+  <div id="mocha"></div>
+  <script type="module">
+    import "mocha";
+    const options = {
+      ui: "bdd",
+      // sql: an utility function for executing
+      globals: ['__loaded_duckdb', 'sql'],
+      checkLeaks: true,
+    };
+    const _reporter = (location.search || '').match(/report=(\w+)/);
+    if (_reporter) options.reporter = _reporter[1];
+    mocha.setup(options);
+  </script>
+  <script type="module" src="../query-optimaztion/create-optimized.spec.ts"></script>
+  <script type="module" src="../utils/fetchSchema.spec.ts"></script>
+  <script type="module" src="./duckdb-loader.spec.ts"></script>
+  <script type="module" src="./duckdb.spec.ts"></script>
+  <script type="module" src="./metadata-table.spec.ts"></script>
+  <script type="module" src="../ParsedDuckDBQuery.spec.ts"></script>
+  <script type="module" src="../utils/countQuery.spec.ts"></script>
+  <script type="module" src="../utils/getTableFromQuery.spec.ts"></script>
+  <script type="module" src="../utils/transformDuckDBVariantValue.spec.ts"></script>
+
+  <script type="module">
+    mocha.run(function (status) {
+      const result = document.createElement('div');
+      result.className = 'mocha-status';
+      result.innerText = status;
+      document.getElementById('toolbar').appendChild(result);
+    });
+  </script>
+</body>
+
+</html>

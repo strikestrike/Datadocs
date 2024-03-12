@@ -1,0 +1,19 @@
+:root {
+  --debugAreaHeight: 60px;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  overscroll-behavior-x: none;
+}
+
+.toolbar {
+  display: flex;
+  flex-direction: row;
+}
+.toolbar > * {
+  margin-right: 4px;
+}
